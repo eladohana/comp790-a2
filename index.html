@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congressional Representation in the U.S.</title>
+
+    <style>
+        body {
+            background-color: rgb(238, 237, 237);
+        }
+
+        .tooltip-combined {
+            padding-left: 10px;
+            padding-right: 10px;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: rgb(166, 220, 166);
+            z-index: 1000;
+        }
+
+        #congressional_maps img{
+            width: 1000px;
+        }
+
+        #vis.vega-embed {
+          width: 100%;
+          display: flex;
+        }
+    
+        #vis.vega-embed details,
+        #vis.vega-embed details summary {
+          position: relative;
+        }
+      </style>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5.16.3"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+      <script src="https://d3js.org/d3.v6.js"></script>
+
+</head>
+<body>
+    <h1>US House of Representatives Representation of voters</h1>
+    <h2>Premise:</h2>
+    <p>U.S. Elections are based on a winner-take-all system where members of the House of Representatives are selected by districts divided along geographical lines.</p>
+    <p>Each district selects from a pool of candidates, where the one with the most votes is chosen to represent that district.</p>
+    <p>This setup, however, could lead to scenarios where voters are not well represented. </p> 
+    <p>For instance, consider that a candidate can win their district with over 50% of the votes in their district.  Now, consider the extreme, though unlikely, scenario where 51% of districts elect candidates from a single party, each winning with 51% of the votes, and that all other voters choose the opposing party.  This now leads the majority party to have won with only about 26% of the votes!</p>
+    <p>While this scenario is very improbable, it is important to ask how well do members of congress represent their constituents?</p>
+
+    <div>
+        <p>The dataset below is credited to the following source:</p>
+        <listing>
+@data{DVN/IG0UN2_2017,
+    author = {MIT Election Data and Science Lab},
+    publisher = {Harvard Dataverse},
+    title = {{U.S. House 1976–2022}},
+    UNF = {UNF:6:A6RSZvlhh8eRZ4+mvT/HRQ==},
+    year = {2017},
+    version = {V12},
+    doi = {10.7910/DVN/IG0UN2},
+    url = {https://doi.org/10.7910/DVN/IG0UN2}
+    }
+                
+        </listing>
+    
+        <p>In all datasets, the data was modified to remove special elections and elections superceded by runoffs to avoid over-representing any state.</p>
+        <p>With the exception of the last graphics, only Democrat and Republican parties are included, since other parties do not have significant representation, either in representatives or voters.</p>
+    </div>
+    <h2>Representation by state</h2>
+    
+    <div >
+        <p>The graphic below shows congressional maps of the contiguous states based on party leaning from 1980, 2000, and 2020. </p>
+        <p>It was created using <strong>Tableau</strong>.</p>
+        <div id="congressional_maps">
+            <img src="map3.png" alt="Map of the United States colored based on congressional party leanings">
+        </div>
+
+    </div>
+    <div>
+        <p>While the maps are useful to see the leanings based on geographic locations, it would be very difficult to clearly show more data.</p>
+        <p>To address this, we created a table for each state at every election cycle from 1976–2022</p>
+        <p>The following attributes:</p>
+        <p>color: Democrat (blue), Republican (red)</p>
+        <p>size: voter alignment with representatives (bigger means voters and representatives match more closely)</p>
+        <p>mouse-over tooltip: State (year), congressional party lean (total members), percentage voter lean.</p>
+        <p>This was created using <strong>d3</strong></p>
+        <div id="combined_timeline"></div>
+        <p>We tend to see that states with less members tend to be less well-represented.  This is expected since any shift in elected representatives will have a high impact on the percentage.</p>
+    </div>
+    <h2>National Results</h2>
+    <div>
+        <p>Finally, we look at combined candidates and voters throughout the country to see if state inconsistencies are averaged out.</p>
+        <p>The graphic below shows a percentage stack of congressional winners and the voters for all parties from 1976 to 2022. </p>
+        <p>The charts were created in <strong>altair</strong></p>
+        <div id="win_timeline"></div>
+        <div id="vote_timeline"></div>
+        <p>Here we tend to see that voters have mostly stayed in the middle, where congressional makeup has mostly followed, with slightly larger spikes at certain times.</p>
+        <p>A possible conclusion could be that while local results may sometimes be skewed, on a national level, congress tends to stay close to voter makeup despite the possibility of edge cases that the system may allow.</p>
+    </div>
+
+
+    <script src="win_timeline.js"></script>
+    <script src="vote_timeline.js"></script>
+    <script src="combined_timeline.js"></script>
+</body>
+</html>
